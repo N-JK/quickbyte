@@ -1,0 +1,126 @@
+<!-- templates/customer/cart.html -->
+<!-- {% extends 'base.html' %}
+
+{% block title %}Shopping Cart{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>Shopping Cart</h3>
+            </div>
+            <div class="card-body">
+                {% if cart and cart.items.exists %}
+                    {% for item in cart.items.all %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="{{ item.food_item.image.url }}" class="img-fluid rounded" alt="{{ item.food_item.name }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>{{ item.food_item.name }}</h5>
+                                        <p class="text-muted">{{ item.food_item.restaurant.name }}</p>
+                                        <div class="mt-2">
+                                            <div class="input-group" style="width: 150px;">
+                                                <button class="btn btn-outline-secondary update-quantity" 
+                                                        data-item-id="{{ item.id }}" data-action="decrease">-</button>
+                                                <input type="number" class="form-control text-center item-quantity" 
+                                                       value="{{ item.quantity }}" min="1" max="10">
+                                                <button class="btn btn-outline-secondary update-quantity" 
+                                                        data-item-id="{{ item.id }}" data-action="increase">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <p class="h5">${{ item.total_price }}</p>
+                                        <button class="btn btn-danger btn-sm remove-item" data-item-id="{{ item.id }}">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-4">
+                        <h4>Your cart is empty</h4>
+                        <a href="{% url 'core:home' %}" class="btn btn-primary mt-3">Browse Restaurants</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h4>Order Summary</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Subtotal</span>
+                    <span>${{ cart.total|default:"0.00" }}</span>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-primary{% if not cart or not cart.items.exists %} disabled{% endif %}">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelectorAll('.update-quantity').forEach(button => {
+    button.addEventListener('click', function() {
+        const itemId = this.dataset.itemId;
+        const action = this.dataset.action;
+        const quantityInput = this.closest('.input-group').querySelector('.item-quantity');
+
+        fetch(`/update-cart/${itemId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ action: action })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                quantityInput.value = data.new_quantity;
+                location.reload();
+            } else {
+                alert(data.error || 'An error occurred.');
+            }
+        });
+    });
+});
+
+document.querySelectorAll('.remove-item').forEach(button => {
+    button.addEventListener('click', function() {
+        const itemId = this.dataset.itemId;
+
+        fetch(`/remove-item/${itemId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert(data.error || 'An error occurred.');
+            }
+        });
+    });
+});
+</script>
+{% endblock %} -->
