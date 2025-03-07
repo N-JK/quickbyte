@@ -33,7 +33,7 @@ jobs:
         push: true
         tags: nibin42/quickbyte:${{ github.sha }}
 
-    # Step 5: Deploy to EC2 and run the container
+    # Step 5: Deploy to EC2 and run the containers
     - name: Deploy to EC2
       uses: appleboy/ssh-action@master
       with:
